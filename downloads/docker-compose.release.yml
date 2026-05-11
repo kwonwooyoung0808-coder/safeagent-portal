@@ -1,6 +1,6 @@
 services:
   api:
-    image: ${SAFEAGENT_API_IMAGE:-ghcr.io/our-org/safeagent:v0.2.0}
+    image: ${SAFEAGENT_API_IMAGE:-safeagent-api-local:v0.2.0}
     restart: unless-stopped
     ports:
       - "8000:8000"
@@ -10,7 +10,7 @@ services:
       - postgres
 
   frontend:
-    image: ${SAFEAGENT_FRONTEND_IMAGE:-ghcr.io/our-org/safeagent-portal:v0.2.0}
+    image: ${SAFEAGENT_FRONTEND_IMAGE:-safeagent-portal-local:v0.2.0}
     restart: unless-stopped
     ports:
       - "3000:80"
@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_DB: safeagent
       POSTGRES_USER: safeagent_app
-      POSTGRES_PASSWORD: change_me
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
